@@ -46,10 +46,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
                                 "/api/v1/auth/register", "/swagger-ui/**",
-                                "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                                "/swagger-ui.html", "/v3/api-docs/**",
+                                "/api/v1/auth/login"
+                        ).permitAll()
                         .requestMatchers(
                                 "/api/v1/auth/account", "/api/v1/auth/update",
-                                "/api/v1/auth/login", "api/v1/auth/changePassword").hasAnyAuthority("USER")
+                                 "api/v1/auth/changePassword"
+                        ).hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/api/v1/categories/**").hasAnyAuthority("ADMIN")
                         .anyRequest()
                         .authenticated()
                 ).userDetailsService(userDetailsServiceImpl)

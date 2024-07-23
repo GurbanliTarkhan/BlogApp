@@ -1,10 +1,10 @@
 package com.tarkhan.blogapp.service.auth.impl;
 
 import com.tarkhan.blogapp.constants.Constants;
+import com.tarkhan.blogapp.entity.Role;
 import com.tarkhan.blogapp.entity.User;
 import com.tarkhan.blogapp.exception.BlogApiException;
 import com.tarkhan.blogapp.exception.ResourceNotFoundException;
-import com.tarkhan.blogapp.mapper.UserMapper;
 import com.tarkhan.blogapp.model.auth.JwtDto;
 import com.tarkhan.blogapp.model.auth.user.*;
 import com.tarkhan.blogapp.model.auth.AuthResponse;
@@ -13,6 +13,7 @@ import com.tarkhan.blogapp.service.auth.AuthService;
 import com.tarkhan.blogapp.service.auth.JwtService;
 import com.tarkhan.blogapp.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,12 +29,13 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final UserMapper userMapper;
     private final JwtUtil jwtUtil;
+    private final ModelMapper modelMapper;
 
     @Override
     public AuthResponse register(RegisterDto request) {
-        User user = userMapper.toUser(request);
+        User user = modelMapper.map(request, User.class);
+        user.setRole(Role.USER);
 
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
@@ -89,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Email", "Email", email));
 
-        GetAccountDto result = userMapper.toGetAccountDto(user);
+        GetAccountDto result = modelMapper.map(user, GetAccountDto.class);
         return result;
 
     }
