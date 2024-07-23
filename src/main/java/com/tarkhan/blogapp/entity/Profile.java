@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -22,7 +21,6 @@ public class Profile {
 
     private String biography;
     private String website;
-    private LocalDate birthdate;
 
     @OneToOne
     @JoinColumn(name = "user_id")

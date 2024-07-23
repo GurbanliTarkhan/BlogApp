@@ -50,9 +50,6 @@ public class Post {
     private Category category;
 
     @OneToMany(mappedBy = "post")
-    private List<Like> likes;
-
-    @OneToMany(mappedBy = "post")
     private List<Media> media;
 
 }
