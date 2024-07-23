@@ -44,9 +44,12 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**", "").permitAll()
-                        .requestMatchers("/category/**").hasAuthority("ADMIN")
-                        .requestMatchers("/wishlist/**").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers(
+                                "/api/v1/auth/register", "/swagger-ui/**",
+                                "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(
+                                "/api/v1/auth/account", "/api/v1/auth/update",
+                                "/api/v1/auth/login", "api/v1/auth/changePassword").hasAnyAuthority("USER")
                         .anyRequest()
                         .authenticated()
                 ).userDetailsService(userDetailsServiceImpl)
@@ -54,4 +57,5 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 }

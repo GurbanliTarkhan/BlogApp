@@ -16,5 +16,4 @@ public class ResponseModel {
     private String statusCode;
     @Schema(description = "Status message in the response")
     private String statusMsg;
-    private HttpStatus status;
 }

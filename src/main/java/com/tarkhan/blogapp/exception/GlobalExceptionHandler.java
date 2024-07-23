@@ -53,7 +53,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(
                         ResponseModel
                                 .builder()
-                                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                                 .statusMsg(ex.getMessage())
                                 .build()
                 );

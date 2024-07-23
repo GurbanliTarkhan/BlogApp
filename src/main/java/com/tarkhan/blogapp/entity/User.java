@@ -30,7 +30,6 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Size(min = 5,max = 32, message = "password size should be between 5 and 32 digit or character")
     private String password;
     private String firstName;
     private String lastName;
@@ -62,7 +61,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     @Override
