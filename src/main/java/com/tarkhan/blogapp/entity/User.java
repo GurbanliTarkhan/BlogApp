@@ -48,9 +48,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "author")
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
-    private List<Like> likes;
-
     @OneToOne(mappedBy = "user")
     private Profile profile;
 

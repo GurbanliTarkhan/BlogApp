@@ -1,7 +1,6 @@
 package com.tarkhan.blogapp.model.auth.user;
 
 import com.tarkhan.blogapp.entity.Comment;
-import com.tarkhan.blogapp.entity.Like;
 import com.tarkhan.blogapp.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +22,4 @@ public class GetAccountDto {
     private LocalDateTime updatedAt;
     private List<Post> posts;
     private List<Comment> comments;
-    private List<Like> likes;
 }
