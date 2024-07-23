@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.security.PublicKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.stream.Collectors;
 public class JwtService {
 
     private static final String SECRET_KEY = "4bf04870a95e3897a02f95eb5477afd89400154cbab8e1f596897f8608572552";
-    
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -37,28 +36,28 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parser()
-                .verifyWith(getSigninKey())
+                .setSigningKey(getSigninKey())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private SecretKey getSigninKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-    
+
     public List<String> getRolesFromToken(String token) {
         return extractClaim(token, claims -> claims.get("roles", List.class));
     }
-    
+
     public boolean isValid(String token, UserDetails user){
         String username = extractUsername(token);
         List<String> tokenRoles = getRolesFromToken(token);
         List<String> userRoles = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
-        
+
         return (username.equals(user.getUsername()))
                 && !isTokenExpired(token)
                 && tokenRoles.containsAll(userRoles);
@@ -79,13 +78,12 @@ public class JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
 
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(user.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
                 .signWith(getSigninKey())
                 .compact();
-        return token;
     }
 }
