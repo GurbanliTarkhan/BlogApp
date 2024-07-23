@@ -27,11 +27,6 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<AuthResponse> updateUser(@RequestBody UpdateUserDto user) {
-        return ResponseEntity.ok(authService.updateUser(user));
-    }
-
     @GetMapping("/account")
     public ResponseEntity<GetAccountDto> getAccount(@RequestParam String email) {
         return ResponseEntity.ok(authService.getAccount(email));
