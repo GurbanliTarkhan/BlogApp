@@ -4,6 +4,7 @@ import com.tarkhan.blogapp.constants.Constants;
 import com.tarkhan.blogapp.model.auth.user.*;
 import com.tarkhan.blogapp.model.auth.AuthResponse;
 import com.tarkhan.blogapp.service.auth.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -51,7 +51,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(
                                 "/api/v1/auth/account", "/api/v1/auth/update",
-                                "api/v1/auth/changePassword", "/api/v1/profiles/**"
+                                "api/v1/auth/changePassword", "/api/v1/profiles/**",
+                                "/api/v1/posts/**"
                         ).hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/api/v1/categories/**", "/api/v1/tags/**")
                         .hasAnyAuthority("ADMIN")

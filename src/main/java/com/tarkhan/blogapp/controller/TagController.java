@@ -6,6 +6,8 @@ import com.tarkhan.blogapp.model.ResponseModel;
 import com.tarkhan.blogapp.model.tag.GetTagByPostDto;
 import com.tarkhan.blogapp.model.tag.GetTagDto;
 import com.tarkhan.blogapp.service.TagService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,39 +25,45 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping
+    @Operation(summary = "Get All Tags")
     public ResponseEntity<Page<GetTagDto>> getAllTags(
-            @RequestParam int page,
-            @RequestParam int size) {
+           @Valid @RequestParam int page,
+           @Valid @RequestParam int size) {
         Page<GetTagDto> tags = tagService.getTags(page, size);
         return ResponseEntity.ok(tags);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetTagDto> getTag(@PathVariable Long id) {
+    @Operation(summary = "Delete a post by its ID")
+    public ResponseEntity<GetTagDto> getTag(@Valid @PathVariable Long id) {
         GetTagDto tag = tagService.getTagById(id);
         return ResponseEntity.ok(tag);
     }
 
     @GetMapping("/by-name")
-    public ResponseEntity<GetTagDto> getTagByName(@RequestParam String name) {
+    @Operation(summary = "Get a tag by Tag Name")
+    public ResponseEntity<GetTagDto> getTagByName(@Valid @RequestParam String name) {
         GetTagDto result = tagService.getTagByName(name);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<GetTagDto>> searchTags(@RequestParam String name){
+    @Operation(summary = "Get a Tags by its Tag Name")
+    public ResponseEntity<List<GetTagDto>> searchTags(@Valid @RequestParam String name){
         List<GetTagDto> tag = tagService.getSearchTags(name);
         return ResponseEntity.ok(tag);
     }
 
-    @GetMapping("/byb-post")
-    public ResponseEntity<GetTagByPostDto> getTagsByPost(@RequestParam Long id){
+    @GetMapping("/by-post")
+    @Operation(summary = "Get a Tag by its post")
+    public ResponseEntity<GetTagByPostDto> getTagsByPost(@Valid @RequestParam Long id){
         GetTagByPostDto tag = tagService.getTagByPosts(id);
         return ResponseEntity.ok(tag);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseModel> createTag(@RequestParam String tagName) {
+    @Operation(summary = "Create Tag")
+    public ResponseEntity<ResponseModel> createTag(@Valid @RequestParam String tagName) {
         tagService.addTag(tagName);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -66,9 +74,10 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update a Tag by its ID")
     public ResponseEntity<ResponseModel> updateTag(
-            @RequestParam Long id,
-            @RequestParam String tagName
+            @Valid @RequestParam Long id,
+            @Valid @RequestParam String tagName
     ) {
         tagService.updateTag(id, tagName);
         return ResponseEntity
@@ -80,7 +89,8 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseModel> deleteTag(@PathVariable Long id) {
+    @Operation(summary = "Delete a Tag by its ID")
+    public ResponseEntity<ResponseModel> deleteTag(@Valid @PathVariable Long id) {
         tagService.deleteTag(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

@@ -7,6 +7,7 @@ import com.tarkhan.blogapp.model.category.GetCategoryByPostDto;
 import com.tarkhan.blogapp.model.category.GetCategoryDto;
 import com.tarkhan.blogapp.model.category.UpdateCategoryDto;
 import com.tarkhan.blogapp.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get a category by its ID")
     public ResponseEntity<GetCategoryDto> getCategory(
             @Valid @PathVariable("id") Long id
     ) {
@@ -33,6 +35,7 @@ public class CategoryController {
     }
 
     @GetMapping("/by-name")
+    @Operation(summary = "Get a category by its Category Name")
     public ResponseEntity<GetCategoryDto> getCategoryByName(
             @Valid @RequestParam String name
     ) {
@@ -41,6 +44,7 @@ public class CategoryController {
     }
 
     @GetMapping
+    @Operation(summary = "Get All Categories")
     public ResponseEntity<Page<GetCategoryDto>> getAllCategories(
             @RequestParam int page,
             @RequestParam int size
@@ -50,6 +54,7 @@ public class CategoryController {
     }
 
     @GetMapping("/search")
+    @Operation(summary = "Get a categories by its name")
     public ResponseEntity<List<GetCategoryDto>> getAllCategoriesByName(
             @Valid @RequestParam String categoryName
     ) {
@@ -58,6 +63,7 @@ public class CategoryController {
     }
 
     @GetMapping("/by-post")
+    @Operation(summary = "Get a category by its post")
     public ResponseEntity<GetCategoryByPostDto> getCategoryByPost(
             @Valid @RequestParam Long id
     ){
@@ -66,6 +72,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Operation(summary = "Create Category")
     public ResponseEntity<ResponseModel> addCategory(
             @RequestBody AddCategoryDto category
     ) {
@@ -79,6 +86,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a category by its ID")
     public ResponseEntity<ResponseModel> deleteCategory(
             @PathVariable("id") Long id
     ) {
@@ -91,6 +99,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update a category by its ID")
     public ResponseEntity<ResponseModel> updateCategory(
             @PathVariable("id") Long id,
             @RequestBody UpdateCategoryDto category
