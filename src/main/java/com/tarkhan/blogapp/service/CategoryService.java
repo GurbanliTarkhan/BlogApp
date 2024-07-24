@@ -1,6 +1,7 @@
 package com.tarkhan.blogapp.service;
 
 import com.tarkhan.blogapp.model.category.AddCategoryDto;
+import com.tarkhan.blogapp.model.category.GetCategoryByPostDto;
 import com.tarkhan.blogapp.model.category.GetCategoryDto;
 import com.tarkhan.blogapp.model.category.UpdateCategoryDto;
 import org.springframework.data.domain.Page;
@@ -15,4 +16,5 @@ public interface CategoryService {
     Page<GetCategoryDto> getAllCategories(int page, int pageSize);
     GetCategoryDto getCategoryByName(String name);
     List<GetCategoryDto> getCategoriesSearch(String prefix);
+    GetCategoryByPostDto getCategoryByPost(Long id);
 }

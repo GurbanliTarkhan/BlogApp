@@ -1,6 +1,7 @@
 package com.tarkhan.blogapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,13 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Category name cannot be blank.")
+    @Column(nullable = false)
     private String name;
+
+    @NotBlank(message = "Category description cannot be blank.")
+    @Column(nullable = false)
     private String description;
 
     @OneToMany(mappedBy = "category")
