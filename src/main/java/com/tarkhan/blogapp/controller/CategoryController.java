@@ -3,6 +3,7 @@ package com.tarkhan.blogapp.controller;
 import com.tarkhan.blogapp.constants.Constants;
 import com.tarkhan.blogapp.model.ResponseModel;
 import com.tarkhan.blogapp.model.category.AddCategoryDto;
+import com.tarkhan.blogapp.model.category.GetCategoryByPostDto;
 import com.tarkhan.blogapp.model.category.GetCategoryDto;
 import com.tarkhan.blogapp.model.category.UpdateCategoryDto;
 import com.tarkhan.blogapp.service.CategoryService;
@@ -54,6 +55,14 @@ public class CategoryController {
     ) {
         List<GetCategoryDto> categories = categoryService.getCategoriesSearch(categoryName);
         return ResponseEntity.status(HttpStatus.OK).body(categories);
+    }
+
+    @GetMapping("/by-post")
+    public ResponseEntity<GetCategoryByPostDto> getCategoryByPost(
+            @Valid @RequestParam Long id
+    ){
+    GetCategoryByPostDto categoryByPost = categoryService.getCategoryByPost(id);
+    return ResponseEntity.status(HttpStatus.OK).body(categoryByPost);
     }
 
     @PostMapping

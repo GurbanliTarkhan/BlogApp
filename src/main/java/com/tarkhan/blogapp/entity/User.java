@@ -1,8 +1,9 @@
 package com.tarkhan.blogapp.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,16 +28,28 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Username cannot be blank.")
     @Column(unique = true, nullable = false)
     private String username;
 
+    @NotBlank(message = "Password cannot be blank.")
     private String password;
+
+    @NotBlank(message = "First name cannot be blank.")
     private String firstName;
+
+    @NotBlank(message = "Last name cannot be blank.")
     private String lastName;
 
+    @NotBlank(message = "Email cannot be blank.")
+    @Email(message = "Email should be valid.")
     @Column(unique = true, nullable = false)
     private String email;
+
+    @NotNull(message = "Created at cannot be null.")
     private LocalDateTime createdAt;
+
+    @NotNull(message = "Updated at cannot be null.")
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)

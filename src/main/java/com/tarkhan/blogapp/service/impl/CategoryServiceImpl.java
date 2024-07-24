@@ -4,8 +4,10 @@ import com.tarkhan.blogapp.entity.Category;
 import com.tarkhan.blogapp.exception.BlogApiException;
 import com.tarkhan.blogapp.exception.ResourceNotFoundException;
 import com.tarkhan.blogapp.model.category.AddCategoryDto;
+import com.tarkhan.blogapp.model.category.GetCategoryByPostDto;
 import com.tarkhan.blogapp.model.category.GetCategoryDto;
 import com.tarkhan.blogapp.model.category.UpdateCategoryDto;
+import com.tarkhan.blogapp.model.post.GetPostDto;
 import com.tarkhan.blogapp.repository.CategoryRepository;
 import com.tarkhan.blogapp.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -92,5 +94,19 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+    @Override
+    public GetCategoryByPostDto getCategoryByPost(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", id));
+
+        GetCategoryByPostDto dto = modelMapper.map(category, GetCategoryByPostDto.class);
+        List<GetPostDto> postDtos = category.getPosts()
+                .stream().map((post) -> modelMapper.map(post, GetPostDto.class))
+                .collect(Collectors.toList());
+
+        dto.setPosts(postDtos);
+        return dto;
     }
 }

@@ -1,6 +1,7 @@
 package com.tarkhan.blogapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,9 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Tag name cannot be blank.")
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "tags")
