@@ -15,5 +15,26 @@ spring:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  # File
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+  # Port
 server:
   port: 8080
+  # AWS S3
+cloud:
+  aws:
+    credentials:
+      access-key: ${ACCESS_KEY}
+      secret-key: ${SECRET_KEY}
+    region:
+      static: ${REGION}
+    stack:
+      auto: false
+application:
+  bucket:
+    name: ${BUCKET_NAME}

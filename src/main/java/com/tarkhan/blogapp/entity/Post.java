@@ -1,5 +1,6 @@
 package com.tarkhan.blogapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,11 @@ public class Post {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "photoFile_id")
+    private PhotoFile photoFile;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
