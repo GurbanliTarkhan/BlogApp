@@ -1,6 +1,7 @@
 package com.tarkhan.blogapp.model.tag;
 
 import com.tarkhan.blogapp.entity.Post;
+import com.tarkhan.blogapp.model.post.GetPostDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,6 @@ public class GetTagByPostDto {
     @NotBlank(message = "Tag name cannot be blank.")
     private String name;
 
-    private List<Post> posts;
+    private List<GetPostDto> posts;
 
 }

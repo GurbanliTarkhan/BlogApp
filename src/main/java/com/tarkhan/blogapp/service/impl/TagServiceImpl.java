@@ -97,10 +97,12 @@ public class TagServiceImpl implements TagService {
                 .orElseThrow(() -> new ResourceNotFoundException("Tag", "Tag ID", tagid));
 
         GetTagByPostDto dto = modelMapper.map(tag, GetTagByPostDto.class);
+
         List<GetPostDto> postDto = tag.getPosts().stream()
                 .map(post -> modelMapper.map(post, GetPostDto.class))
                 .collect(Collectors.toList());
 
+        dto.setPosts(postDto);
         return dto;
     }
 }
