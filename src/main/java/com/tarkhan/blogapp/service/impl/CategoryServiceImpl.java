@@ -102,6 +102,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", id));
 
         GetCategoryByPostDto dto = modelMapper.map(category, GetCategoryByPostDto.class);
+
         List<GetPostDto> postDtos = category.getPosts()
                 .stream().map((post) -> modelMapper.map(post, GetPostDto.class))
                 .collect(Collectors.toList());

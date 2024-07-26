@@ -23,7 +23,9 @@ public class PostController {
 
     @PostMapping
     @Operation(summary = "Create a new post",
-            requestBody = @RequestBody(content = @Content(mediaType = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE,
+            requestBody = @RequestBody(
+                    content = @Content(mediaType = org.springframework
+                            .http.MediaType.MULTIPART_FORM_DATA_VALUE,
                     schema = @Schema(implementation = AddPostDto.class))))
     public ResponseEntity<GetPostDto> createPost(
             @ModelAttribute AddPostDto postDto,
@@ -34,7 +36,9 @@ public class PostController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing post",
-            requestBody = @RequestBody(content = @Content(mediaType = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE,
+            requestBody = @RequestBody(
+                    content = @Content(mediaType = org.springframework
+                            .http.MediaType.MULTIPART_FORM_DATA_VALUE,
                     schema = @Schema(implementation = AddPostDto.class))))
     public ResponseEntity<GetPostDto> updatePost(
             @PathVariable Long id,
