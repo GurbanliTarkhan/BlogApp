@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RegisterDto {
 
-    @Column(unique = true, nullable = false)
+    @NotBlank(message = "First name must not be blank")
     private String username;
 
     @NotBlank(message = "First name must not be blank")
@@ -25,7 +25,6 @@ public class RegisterDto {
 
     @Email(message = "Please enter a valid email address.")
     @NotBlank(message = "Email must not be blank")
-    @Column(unique = true, nullable = false)
     private String email;
 
     @NotBlank(message = "Password must not be blank")

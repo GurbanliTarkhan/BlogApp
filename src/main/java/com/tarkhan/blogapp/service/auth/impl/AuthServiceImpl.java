@@ -43,6 +43,8 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse register(RegisterDto request) {
         User user = modelMapper.map(request, User.class);
         user.setRole(Role.USER);
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
 
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
