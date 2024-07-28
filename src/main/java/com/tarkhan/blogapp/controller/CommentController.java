@@ -24,15 +24,15 @@ public class CommentController {
     @GetMapping
     @Operation(summary = "Get All Comments")
     public ResponseEntity<Page<CommentDto>> getAllComments(
-            @Valid @RequestParam int page,
-            @Valid @RequestParam int size) {
+            @RequestParam int page,
+            @RequestParam int size) {
         Page<CommentDto> comments = commentService.getComments(page, size);
         return ResponseEntity.ok(comments);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get Comment by ID")
-    public ResponseEntity<CommentDto> getCommentById(@Valid @PathVariable Long id) {
+    public ResponseEntity<CommentDto> getCommentById(@PathVariable Long id) {
         CommentDto comment = commentService.getCommentById(id);
         return ResponseEntity.ok(comment);
     }
@@ -54,7 +54,7 @@ public class CommentController {
     @PutMapping("/{id}")
     @Operation(summary = "Update Comment by ID")
     public ResponseEntity<ResponseModel> updateComment(
-            @Valid @PathVariable Long id,
+            @PathVariable Long id,
             @Valid @RequestBody UpdateCommentDto updateCommentDto) {
         commentService.updateComment(id, updateCommentDto);
         return ResponseEntity
@@ -67,13 +67,10 @@ public class CommentController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete Comment by ID")
-    public ResponseEntity<ResponseModel> deleteComment(@Valid @PathVariable Long id) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
-                .body(new ResponseModel(
-                        Constants.STATUS_200,
-                        Constants.MESSAGE_200
-                ));
+                .build();
     }
 }
